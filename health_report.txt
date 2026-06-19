@@ -1,0 +1,42 @@
+2026-06-17 16:21:38.949538
+Cpu usage is: 0.0%
+Ram usage is: 81.1%
+Disk usage is: 20.1%
+Cpu is in normal state: 0.0%
+Ram is in warning state: 81.1%
+Disk is in normal state: 20.1%
+2026-06-17 16:22:03.963703
+Cpu usage is: 12.1%
+Ram usage is: 80.9%
+Disk usage is: 20.1%
+Cpu is in normal state: 12.1%
+Ram is in warning state: 80.9%
+Disk is in normal state: 20.1%
+2026-06-17 16:22:28.969634
+Cpu usage is: 16.4%
+Ram usage is: 81.7%
+Disk usage is: 20.1%
+Cpu is in normal state: 16.4%
+Ram is in warning state: 81.7%
+Disk is in normal state: 20.1%
+2026-06-17 16:22:53.974494
+Cpu usage is: 20.7%
+Ram usage is: 81.5%
+Disk usage is: 20.1%
+Cpu is in normal state: 20.7%
+Ram is in warning state: 81.5%
+Disk is in normal state: 20.1%
+2026-06-17 16:23:18.980923
+Cpu usage is: 18.0%
+Ram usage is: 81.6%
+Disk usage is: 20.1%
+Cpu is in normal state: 18.0%
+Ram is in warning state: 81.6%
+Disk is in normal state: 20.1%
+2026-06-17 16:23:43.985176
+Cpu usage is: 22.2%
+Ram usage is: 82.8%
+Disk usage is: 20.1%
+Cpu is in normal state: 22.2%
+Ram is in warning state: 82.8%
+Disk usage is in normal state: 20.1%
