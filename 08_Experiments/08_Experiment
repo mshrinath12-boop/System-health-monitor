@@ -1,0 +1,80 @@
+import psutil
+import json
+import time
+import logging
+logging.basicConfig(
+    filename= "system.log",
+    level= logging.INFO,
+    format= "%(asctime)s | %(levelname)s | %(message)s"
+    
+    )
+
+class SystemMonitor():
+    def __init__(self,config_file):
+              try:
+                   with open(config_file) as file:
+                        self.data=json.load(file)
+                        print("Config file found successfully")
+                        logging.info(f"Config file found successfuly")
+              except FileNotFoundError:
+                        print("File not found error")
+                        logging.error("File not found error")
+              except json.JSONDecodeError:
+                   print("Config file has invalid json")
+                   logging.error("Config file has invalid json")
+          
+              except Exception as e:
+                    print(f"Unexpected error: {e}")   
+                    print(e)
+                    logging.error(f"Unexpected error {e}")
+
+                    
+    
+                       
+
+    def check_resource(self,resource_name,value,critical,warning):
+            if value>=critical:
+                logging.critical(f"{resource_name} is in Critical state: {value}%")
+                return "Critical"
+            elif value>=warning:
+                logging.warning(f"{resource_name} is in Warning state: {value}% ")
+                return "Warning"
+            else:
+                logging.info(f"{resource_name} is in normal state: {value}%")
+                return "Normal"
+    def check_cpu(self):
+              cpu= psutil.cpu_percent()
+              return self.check_resource("Cpu",cpu,self.data["cpu_critical"],self.data["cpu_warning"])
+    
+    def check_ram(self):
+                ram= psutil.virtual_memory().percent
+                return self.check_resource("Ram",ram,self.data["ram_critical"],self.data["ram_warning"])     
+    def check_disk(self):
+         disk= psutil.disk_usage("c:\\").percent
+         return self.check_resource("Disk",disk,self.data["disk_critical"],self.data["disk_warning"])
+    
+    def start_monitoring(self):
+           while True:
+                  from datetime import datetime
+                  current_time= datetime.now()
+                  print(current_time)
+                  try:
+                        cpu_state= self.check_cpu()    
+                        print(cpu_state)
+                        ram_state= self.check_ram()
+                        print(ram_state)
+                        disk_state= self.check_disk()
+                        print(disk_state)
+                  except KeyError as e:
+                         print("Missing config in config file")
+                         logging.error(f"Missing config in config file: {e}")
+                  except Exception as e:
+                         print(f"Unexpected error: {e}")
+                         logging.error(f"Unexpected error: {e}")       
+                  time.sleep(self.data["interval"])    
+              
+monitor= SystemMonitor("config.json")
+monitor.start_monitoring()
+
+
+
