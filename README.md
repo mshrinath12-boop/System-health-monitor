@@ -50,7 +50,7 @@ A collection of Python scripting exercises, automation scripts, and system monit
 
 
 
-## What I Learned
+
 
 ## What I Learned
 
