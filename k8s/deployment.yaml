@@ -1,0 +1,56 @@
+name: System Health Monitor CI/CD
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.12
+    
+    - name: Cache pip dependencies
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+        restore-keys: ${{ runner.os }}-pip-
+    
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+    
+    - name: Build Docker image
+      run: docker build -t health-monitor:${{ github.sha }} .
+    
+    - name: Verify Docker build
+      if: success()
+      run: echo "✅ Docker image built successfully"
+    
+    - name: Check build failure
+      if: failure()
+      run: echo "❌ Docker build failed"
+
+  docker-push:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' }}
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Build final image for push
+      run: docker build -t health-monitor:latest .
+    
+    - name: Image ready for registry
+      run: echo "Image ready to push to registry"

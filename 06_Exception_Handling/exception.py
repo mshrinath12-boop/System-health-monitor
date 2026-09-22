@@ -35,7 +35,7 @@ while True:
                 logging.error(f"Ram monitoring error: {e}")
                 time.sleep(10)   
         try:
-                disk= psutil.disk_usage("c:\\").percent
+                disk= psutil.disk_usage('C:\\').percent
                 if disk>=90:
                         logging.critical(f"Disk is in critical state: {disk}%")
                 elif disk>=80:
@@ -44,5 +44,5 @@ while True:
                         logging.info(f"Disk is in normal state: {disk}%")
         except Exception as e:
                 logging.error(f"Disk monitoring error: {e}")  
-                time.sleep(10)
+        time.sleep(10)
                                                                              

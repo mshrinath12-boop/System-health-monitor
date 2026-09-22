@@ -1,0 +1,47 @@
+name: System Health Monitor CI
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Check Python syntax
+        run: |
+          python -m py_compile 04_JSON/jsonexperiment.py
+
+      - name: Build Docker image
+        run: |
+          docker build \
+            --tag system-health-monitor:ci \
+            .
+
+      - name: Verify files inside Docker image
+        run: |
+          docker run --rm \
+            --entrypoint sh \
+            system-health-monitor:ci \
+            -c "test -f /app/04_JSON/jsonexperiment.py && test -f /app/04_JSON/config.json"git fetch origin
+git rebase origin/main

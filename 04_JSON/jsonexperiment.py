@@ -1,9 +1,15 @@
 import json
 import psutil
 import time
-file= open("config.json")
-data= json.load(file)
+import shutil
+from pathlib import Path
+
+CONFIG_PATH = Path(__file__).resolve().parent / "config.json"
+
+with CONFIG_PATH.open("r", encoding="utf-8") as file:
+    data = json.load(file)
 while True:
+    pass
     from datetime import datetime
     current_time= datetime.now()
     print(current_time)
@@ -23,13 +29,13 @@ while True:
     else:
         print(f"Ram is in normal state: {ram}%")
         time.sleep(data["interval"])
-    disk= psutil.disk_usage("c:\\").percent
+    disk= psutil.disk_usage("/").percent
     if disk>=data["disk_critical"]:
-        print(f"Disk is in critical state: {disk}%")
+        print(f"Disk is in critical state: {disk:.2f}%")
     elif disk>=data["disk_warning"]:
-        print(f"Disk is in warning state: {disk}%")
+        print(f"Disk is in warning state: {disk:.2f}%")
     else:
-        print(f"Disk is in normal state: {disk}%")   
+        print(f"Disk is in normal state: {disk:.2f}%")   
         time.sleep(data["interval"])
         
 
