@@ -43,5 +43,4 @@ jobs:
           docker run --rm \
             --entrypoint sh \
             system-health-monitor:ci \
-            -c "test -f /app/04_JSON/jsonexperiment.py && test -f /app/04_JSON/config.json"git fetch origin
-git rebase origin/main
+            -c "test -f /app/04_JSON/jsonexperiment.py && test -f /app/04_JSON/config.json"
